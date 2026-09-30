@@ -116,11 +116,11 @@ src="https://www.facebook.com/tr?id=2345924952477977&ev=PageView&noscript=1"
   var DESTINATION = "https://rakebet.io/";
   var AFFILIATE_CODE = "B2C038DD";
 
-  // Carry every utm_* param the visitor arrived with over to the destination.
-  var params = new URLSearchParams({ register: "true", affiliate_code: AFFILIATE_CODE });
-  new URLSearchParams(window.location.search).forEach(function(value, key){
-    if (/^utm_/i.test(key)) params.set(key, value);
-  });
+  // Carry every query param the visitor arrived with (utm_*, fbclid, gclid, ...) over to
+  // the destination so tracking stays complete. Our own two params always win.
+  var params = new URLSearchParams(window.location.search);
+  params.set("register", "true");
+  params.set("affiliate_code", AFFILIATE_CODE);
 
   var cta = document.getElementById("cta");
   cta.href = DESTINATION + "?" + params.toString();
